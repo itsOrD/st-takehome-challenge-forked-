@@ -1,5 +1,5 @@
 {
-  "name": "sandbox",
+  "name": "beckerlegs-sandbox",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -26,5 +26,8 @@
     "eslint-plugin-react-refresh": "^0.4.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
