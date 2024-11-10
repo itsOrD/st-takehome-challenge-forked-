@@ -1,0 +1,9 @@
+.card {
+  box-shadow: 0, 2px, 4pox rbga(0,0,0,0.1);
+}
+
+.imageContainer {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
