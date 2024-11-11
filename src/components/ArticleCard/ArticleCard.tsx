@@ -1,13 +1,5 @@
 import styles from './ArticleCard.module.css';
-
-interface Article {
-  articleId: number;
-  title: string;
-  body: string;
-  thumbnailURL: string;
-  articleURL: string;
-  // ToDo: add other fields as needed
-}
+import { Article } from '../../api/articlesApi';
 
 interface ArticleCardProps {
   article: Article;
