@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { Article, fetchArticles } from "./api/articlesApi";
 import "./App.css";
 import ArticleCard from "./components/ArticleCard/ArticleCard";
+import ArticleCarousel from "./components/ArticleCarousel/ArticleCarousel";
 
 function App() {
-  const [article, setArticle] = useState<Article | null>(null);
+  const [articles, setArticles] = useState<Article[] | null>(null);
 
   useEffect(() => {
-    fetchArticles()
-      .then(articles => setArticle(articles[
-        Math.floor(Math.random() * articles.length) // Ensure that more than just one article loads
-      ]))
-      .catch(err => console.error(`Failed to fetch article: `, err));
+    fetchArticles().then(setArticles);
   }, []); // only run when the component mounts (for now)
 
   // Guard clause to deal with nulls
-  if (!article) return <div>Loading..?</div>
+  if (!articles) return <div>Loading..?</div>
 
   return (
     <div>
-      <ArticleCard article={article}/>
+      {/* <ArticleCard article={article}/> */}
+      <ArticleCarousel articles={articles} />
     </div>
   );
 }
