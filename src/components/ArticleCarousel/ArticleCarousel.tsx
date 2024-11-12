@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Article } from '../../api/articlesApi';
 import ArticleCard from '../ArticleCard/ArticleCard';
 import styles from './ArticleCarousel.module.css';
+import LoadMoreButton from '../LoadMoreButton/LoadMoreButton';
 
 interface ArticleCarouselProps {
   articles: Article[];
@@ -56,6 +57,10 @@ const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
             →
         </button>
 
+        <LoadMoreButton
+          onClick={handleNext}
+          showAll={false}
+        />
       </div>
     </div>
   )

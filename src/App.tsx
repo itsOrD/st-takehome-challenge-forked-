@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Article, fetchArticles } from "./api/articlesApi";
 import "./App.css";
-import ArticleCard from "./components/ArticleCard/ArticleCard";
 import ArticleCarousel from "./components/ArticleCarousel/ArticleCarousel";
+import LoadMoreButton from "./components/LoadMoreButton/LoadMoreButton";
 
 function App() {
   const [articles, setArticles] = useState<Article[] | null>(null);
@@ -16,7 +16,6 @@ function App() {
 
   return (
     <div>
-      {/* <ArticleCard article={article}/> */}
       <ArticleCarousel articles={articles} />
     </div>
   );
