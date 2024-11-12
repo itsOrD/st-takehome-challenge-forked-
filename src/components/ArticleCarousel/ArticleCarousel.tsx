@@ -8,16 +8,34 @@ interface ArticleCarouselProps {
 }
 
 const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
-  // ToDo: implement forward button
-  // ToDo: implement back button
-  // ToDo: implement "show more"
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (
+      (prev + 3) >= articles.length ? 3 : prev + 3
+    ));
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (
+      (prev - 3 < 0) ? articles.length - 3 : prev - 3
+    ));
+  };
 
   const visibleArticles = articles.slice(currentIndex, currentIndex + 3);
 
   return (
     <div className={styles.carouselWrapper}>
       <div className={styles.container}>
+
+        <button
+          className={`${styles.arrow} ${styles.leftArrow}`}
+          onClick={handlePrevious}
+          aria-label="Previous articles"
+          >
+            ←
+        </button>
+
         <div className={styles.carousel}>
           {/* Map through visible articles and render an ArticleCard for each */}
           {
@@ -29,6 +47,15 @@ const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
             ))
           }
         </div>
+
+        <button
+          className={`${styles.arrow} ${styles.rightArrow}`}
+          onClick={handleNext}
+          aria-label="Next articles"
+          >
+            →
+        </button>
+
       </div>
     </div>
   )
