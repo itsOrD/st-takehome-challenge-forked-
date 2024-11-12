@@ -1,29 +1,47 @@
 import { useState } from 'react';
-import { Article } from '../../api/articlesApi';
+import { useArticles } from '../../hooks/useArticles';
 import ArticleCard from '../ArticleCard/ArticleCard';
 import styles from './ArticleCarousel.module.css';
 import LoadMoreButton from '../LoadMoreButton/LoadMoreButton';
 
 interface ArticleCarouselProps {
-  articles: Article[];
+  articlesPerView: number;
+  onShowMore: () => void;
+  onShowLess: () => void;
+  isExpanded: boolean;
+  totalArticles: number;
 }
 
-const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
+const ArticleCarousel = ({
+  articlesPerView,
+  onShowMore,
+  onShowLess,
+  isExpanded,
+  totalArticles
+}: ArticleCarouselProps) => {
+  const { articles, isLoading, error } = useArticles();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (
-      (prev + 3) >= articles.length ? 3 : prev + 3
-    ));
-  };
+  if (isLoading) return <div role="alert" aria-busy="true">Loading...</div>;
+  if (error) return <div role="alert">{error}</div>;
+  if (!Array.isArray(articles)) 
+    return <div role="alert">Error loading articles</div>;
 
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (
-      (prev - 3 < 0) ? articles.length - 3 : prev - 3
-    ));
+    setCurrentIndex((prev) => {
+      const newIndex = prev - articlesPerView;
+      return newIndex < 0 ? totalArticles - articlesPerView : newIndex;
+    })
   };
 
-  const visibleArticles = articles.slice(currentIndex, currentIndex + 3);
+  const handleNext = () => {
+    setCurrentIndex((prev) => {
+      const newIndex = prev + articlesPerView;
+      return newIndex >= totalArticles ? 0 : newIndex;
+    });
+  };
+
+  const visibleArticles = articles.slice(currentIndex, currentIndex + articlesPerView);
 
   return (
     <div className={styles.carouselWrapper}>
@@ -58,8 +76,8 @@ const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
         </button>
 
         <LoadMoreButton
-          onClick={handleNext}
-          showAll={false}
+          onClick={isExpanded ? onShowLess : onShowMore}
+          showAll={isExpanded}
         />
       </div>
     </div>

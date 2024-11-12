@@ -1,23 +1,49 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import ArticleCarousel from "./ArticleCarousel";
 
-describe('ArticleCarousel', () => {
+// ToDo: Move all re-useable test constants to a test constants file
+const TOTAL_ARTICLES = 6;
 
-  // ToDo: Make less brittle by not requiring manual updates within this/every
-  //       test file that relies on data from api.
-  
-  // Create an Articles[] full of mock articles for testing against
-  const mockArticles = Array.from({ length: 6 }, (_, i) => ({
-    articleId: i,
-    thumbnailURL: `https://example.com/images${i}`,
-    title: `Article ${i}`,
-    body: `Content ${i}`,
-    articleURL: `https://example.com/${i}`,
-  }))
+// Create an Articles[] full of mock articles for testing against
+const mockArticles = Array.from({ length: TOTAL_ARTICLES }, (_, i) => ({
+  articleId: i,
+  thumbnailURL: `https://example.com/images${i}`,
+  title: `Article ${i}`,
+  body: `Content ${i}`,
+  articleURL: `https://example.com/${i}`,
+}));
+
+// Mock for the useArticles hook
+vi.mock('../../hooks/useArticles', () => ({
+  useArticles: () => ({
+    articles: mockArticles,
+    isLoading: false,
+    error: null
+  })
+}));
+
+
+// === === === ACTUAL TESTS === === === \\
+
+// ToDo: Make less brittle by not requiring manual updates within this/every
+//       test file that relies on data from api.
+describe('ArticleCarousel', () => {
+  // "Mock" props
+  const defaultProps = {
+    articlesPerView: 3,
+    onShowMore: vi.fn(),
+    onShowLess: vi.fn(),
+    isExpanded: false,
+    totalArticles: TOTAL_ARTICLES,
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  })
 
   it('renders initial set of articles', () => {
-    const { container } = render(<ArticleCarousel articles={mockArticles} />);
+    const { container } = render(<ArticleCarousel {...defaultProps} />);
     const articles = container.querySelectorAll('article');
     expect(articles.length).toBe(3);
   });
@@ -25,7 +51,7 @@ describe('ArticleCarousel', () => {
   // Navigation tests
   describe('navigation', () => {
     it('shows next set of articles when clicking next arrow', () => {
-      render(<ArticleCarousel articles={mockArticles} />);
+      render(<ArticleCarousel {...defaultProps} />);
       
       // Get initial articles
       const firstArticleTitle = screen.getByText('Article 0');
@@ -40,7 +66,7 @@ describe('ArticleCarousel', () => {
     });
 
     it('shows previous set of articles when clicking previous arrow', () => {
-      render(<ArticleCarousel articles={mockArticles} />);
+      render(<ArticleCarousel {...defaultProps} />);
       
       // Navigate forward first
       fireEvent.click(screen.getByLabelText('Next articles'));
@@ -51,14 +77,14 @@ describe('ArticleCarousel', () => {
     });
 
     it('handles wrapping around at the end of the list', () => {
-      render(<ArticleCarousel articles={mockArticles} />);
+      render(<ArticleCarousel {...defaultProps} />);
       const nextButton = screen.getByLabelText('Next articles');
 
-      // Click next twice to reach "end"
+      // Click next twice to reach "end" and wrap back
       fireEvent.click(nextButton);
       fireEvent.click(nextButton);
 
-      expect(screen.getByText('Article 3')).toBeInTheDocument();
+      expect(screen.getByText('Article 0')).toBeInTheDocument();
     });
   })
 });
