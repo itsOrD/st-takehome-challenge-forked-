@@ -1,4 +1,4 @@
-.card {
+/* .card {
   border: 1px solid #eee;
   border-radius: 2;
   padding: 15px;
@@ -20,4 +20,154 @@
   width: 100%;
   height: auto;
   border-radius: 4px;
+} */
+
+.card {
+  position: relative;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+}
+
+.imageContainer img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .imageContainer img {
+  transform: scale(1.05);
+}
+
+.card h2 {
+  padding: 1rem 1.5rem 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.card:hover h2 {
+  color: #2563eb; /* Modern blue shade */
+}
+
+.card p {
+  padding: 0 1.5rem 1rem;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card a {
+  display: inline-block;
+  margin: 0 1.5rem 1.5rem;
+  padding: 0.5rem 0;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.card a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.card:hover a::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Overlay effect */
+.imageContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(37, 99, 235, 0) 0%,
+    rgba(37, 99, 235, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .imageContainer::after {
+  opacity: 1;
+}
+
+/* Clean shine effect */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s ease;
+  opacity: 0;
+}
+
+.card:hover::before {
+  animation: shine 1s ease;
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+    opacity: 1;
+  }
+}
+
+/* Responsive hover handling */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-8px);
+  }
+}
+
+@media (hover: none) {
+  .card:active {
+    transform: translateY(-4px);
+  }
 }

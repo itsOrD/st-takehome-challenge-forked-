@@ -15,10 +15,43 @@
   padding: 0 40px;
 }
 
+.carouselWrapper {
+  background: #f8f8f8;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+/* .carouselWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px; 
+}
+
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 40px) / 3);
+  gap: 20px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+} */
+
+/*
 .arrow {
   position: absolute;
   top: 50%;
-  /* transform: translateY(-50%); */
+  transform: translateY(-50%);
 }
 
 .leftArrow {
@@ -28,11 +61,150 @@
 .rightArrow {
   right: 10px;
 }
+*/
 
-.carouselWrapper {
-  background: #f8f8f8;
-  border-radius: 8px;
-  overflow: hidden;
-  /* margin-bottom: 20px; */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+/* Arrow Base Styles */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  color: #2563eb;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Arrow Positions */
+.leftArrow {
+  left: 0;
+}
+
+.rightArrow {
+  right: 0;
+}
+
+/* Hover Effects */
+.arrow:hover {
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Custom Arrow Icons */
+.leftArrow::before,
+.rightArrow::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-style: solid;
+  border-width: 2px 2px 0 0;
+  transition: all 0.3s ease;
+}
+
+.leftArrow::before {
+  transform: rotate(-135deg);
+  margin-left: 4px;
+}
+
+.rightArrow::before {
+  transform: rotate(45deg);
+  margin-right: 4px;
+}
+
+/* Arrow Disabled State */
+.arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f5f5f5;
+  color: #999;
+  box-shadow: none;
+}
+
+/* Shine Effect */
+.arrow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.13) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.13) 55%,
+    transparent 100%
+  );
+  transform: rotate(45deg);
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.arrow:hover::after {
+  animation: shine 1s ease;
+}
+
+/* Focus States */
+.arrow:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.arrow:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+/* Animations */
+@keyframes shine {
+  0% {
+    left: -50%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 40px;
+  }
+
+  .arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .carousel {
+    grid-auto-columns: calc(100% - 20px);
+  }
+}
+
+/* Custom Scrollbar for Overflow */
+.carousel::-webkit-scrollbar {
+  height: 0;
+  width: 0;
 }

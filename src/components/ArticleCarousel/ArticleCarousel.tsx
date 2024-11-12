@@ -52,7 +52,7 @@ const ArticleCarousel = ({
           onClick={handlePrevious}
           aria-label="Previous articles"
           >
-            ←
+            {/* ← */}
         </button>
 
         <div className={styles.carousel}>
@@ -72,7 +72,7 @@ const ArticleCarousel = ({
           onClick={handleNext}
           aria-label="Next articles"
           >
-            →
+            {/* → */}
         </button>
 
         <LoadMoreButton
