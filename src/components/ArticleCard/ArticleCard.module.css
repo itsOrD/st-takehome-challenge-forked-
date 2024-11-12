@@ -1,8 +1,21 @@
 .card {
-  box-shadow: 0, 2px, 4pox rbga(0,0,0,0.1);
+  border: 1px solid #eee;
+  border-radius: 2;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 0 0 calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .imageContainer {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.imageContainer img {
   width: 100%;
   height: auto;
   border-radius: 4px;

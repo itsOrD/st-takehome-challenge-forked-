@@ -16,17 +16,19 @@ const ArticleCarousel = ({ articles }: ArticleCarouselProps) => {
   const visibleArticles = articles.slice(currentIndex, currentIndex + 3);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.carousel}>
-        {/* Map through visible articles and render an ArticleCard for each */}
-        {
-          visibleArticles.map((article) => (
-            <ArticleCard
-              key={article.articleId}
-              article={article}
-            />
-          ))
-        }
+    <div className={styles.carouselWrapper}>
+      <div className={styles.container}>
+        <div className={styles.carousel}>
+          {/* Map through visible articles and render an ArticleCard for each */}
+          {
+            visibleArticles.map((article) => (
+              <ArticleCard
+                key={article.articleId}
+                article={article}
+              />
+            ))
+          }
+        </div>
       </div>
     </div>
   )
